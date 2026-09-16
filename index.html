@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Food Service as a Force for Good — Companion Handout</title>
+<style>
+  :root{
+    --ink:#1A1A1A;
+    --coral:#E4502F;
+    --coral-soft:#FBE4DC;
+    --gray:#6E6E6E;
+    --tint:#F4F2F0;
+    --white:#FFFFFF;
+    --border:#E0DDD8;
+    --good:#3F7D53;
+    --good-soft:#E4EFE6;
+    --warn:#C98A2C;
+    --warn-soft:#F6EBDA;
+    --bad:#B03A2E;
+    --bad-soft:#F5E1DE;
+    --shadow: 0 1px 3px rgba(26,26,26,0.08), 0 1px 2px rgba(26,26,26,0.06);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#F2F0ED;
+      --tint:#1E1D1B;
+      --white:#28271F;
+      --border:#3A3833;
+      --gray:#B7B3AC;
+      --coral-soft:#4A2A22;
+      --good-soft:#20302A;
+      --warn-soft:#3A2E1B;
+      --bad-soft:#3A2320;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#F2F0ED;
+    --tint:#1E1D1B;
+    --white:#28271F;
+    --border:#3A3833;
+    --gray:#B7B3AC;
+    --coral-soft:#4A2A22;
+    --good-soft:#20302A;
+    --warn-soft:#3A2E1B;
+    --bad-soft:#3A2320;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--tint);
+    color:var(--ink);
+    font-family: Calibri, "Segoe UI", Arial, sans-serif;
+    font-size:16px;
+    line-height:1.5;
+  }
+  h1,h2,h3,.headline{
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    font-weight:700;
+    color:var(--ink);
+    margin:0;
+  }
+  .wrap{max-width:920px; margin:0 auto; padding:0 20px 64px;}
+  header.top{
+    background:var(--ink);
+    color:var(--white);
+    padding:22px 20px 20px;
+  }
+  header.top .wrap{padding:0 20px;}
+  .brandrow{display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;}
+  .wordmark{
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight:700;
+    letter-spacing:0.06em;
+    font-size:15px;
+    color:var(--white);
+    white-space:nowrap;
+  }
+  .wordmark span{color:var(--coral);}
+  .tag{
+    font-size:12px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:#C9C6C1;
+  }
+  .titleblock{margin-top:14px;}
+  .titleblock h1{font-size:26px; color:var(--white); line-height:1.25;}
+  .titleblock p{margin:6px 0 0; color:#D8D5D0; font-size:14px; max-width:640px;}
+  nav.steps{
+    position:sticky; top:0; z-index:10;
+    background:var(--white);
+    border-bottom:1px solid var(--border);
+    overflow-x:auto;
+    -ms-overflow-style: none; scrollbar-width: none;
+  }
+  nav.steps::-webkit-scrollbar{display:none;}
+  nav.steps .wrap{display:flex; gap:6px; padding:10px 20px;}
+  .steptab{
+    flex:0 0 auto;
+    display:flex; align-items:center; gap:8px;
+    padding:8px 14px;
+    border-radius:999px;
+    border:1px solid var(--border);
+    background:var(--white);
+    color:var(--gray);
+    font-size:13px;
+    font-weight:600;
+    cursor:pointer;
+    white-space:nowrap;
+    transition:background .15s, color .15s, border-color .15s;
+  }
+  .steptab .num{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:20px; height:20px; border-radius:50%;
+    background:var(--tint); color:var(--gray);
+    font-size:11px; font-weight:700;
+  }
+  .steptab.active{background:var(--ink); color:var(--white); border-color:var(--ink);}
+  .steptab.active .num{background:var(--coral); color:var(--white);}
+  main{padding-top:28px;}
+  .panel{display:none;}
+  .panel.active{display:block; animation:fade .18s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:none;}}
+  .card{
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:24px;
+    box-shadow:var(--shadow);
+    margin-bottom:20px;
+  }
+  .eyebrow{
+    font-size:12px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--coral); margin-bottom:6px;
+  }
+  .card h2{font-size:22px; margin-bottom:4px;}
+  .meta{color:var(--gray); font-size:13px; margin-bottom:18px;}
+  .meta b{color:var(--ink);}
+  p.lead{color:var(--gray); font-size:14.5px; margin:0 0 18px;}
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  @media (max-width:680px){.grid2{grid-template-columns:1fr;}}
+  .barrier-list{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+  @media (max-width:680px){.barrier-list{grid-template-columns:1fr;}}
+  label.chk{
+    display:flex; align-items:flex-start; gap:10px;
+    padding:10px 12px; border:1px solid var(--border); border-radius:10px;
+    cursor:pointer; font-size:14px; background:var(--tint);
+    transition:border-color .15s, background .15s;
+  }
+  label.chk:has(input:checked){border-color:var(--coral); background:var(--coral-soft);}
+  label.chk input{margin-top:2px; accent-color:var(--coral);}
+  .tally{
+    display:flex; align-items:center; gap:14px; margin-top:16px; flex-wrap:wrap;
+  }
+  .tally .count{font-size:32px; font-weight:700; font-family:Arial,sans-serif;}
+  .bar{flex:1; min-width:160px; height:10px; background:var(--tint); border-radius:6px; overflow:hidden; border:1px solid var(--border);}
+  .bar > i{display:block; height:100%; background:var(--coral); width:0%; transition:width .2s;}
+  .sites{display:flex; flex-direction:column; gap:10px; margin-bottom:16px;}
+  .siterow{display:flex; gap:8px; align-items:center; flex-wrap:wrap;}
+  .siterow input[type=text]{
+    flex:1; min-width:140px; padding:9px 10px; border:1px solid var(--border); border-radius:8px;
+    font-size:14px; background:var(--white); color:var(--ink); font-family:inherit;
+  }
+  .siterow select{
+    padding:9px 10px; border:1px solid var(--border); border-radius:8px; font-size:13px;
+    background:var(--white); color:var(--ink); font-family:inherit;
+  }
+  .iconbtn{
+    border:1px solid var(--border); background:var(--white); color:var(--gray);
+    width:34px; height:34px; border-radius:8px; cursor:pointer; font-size:16px; flex:0 0 auto;
+  }
+  .iconbtn:hover{border-color:var(--coral); color:var(--coral);}
+  .btnrow{display:flex; gap:10px; flex-wrap:wrap; margin-top:6px;}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:10px 16px; border-radius:9px; border:1px solid var(--ink);
+    background:var(--ink); color:var(--white); font-weight:700; font-size:14px;
+    cursor:pointer; font-family:Arial,sans-serif;
+  }
+  .btn.secondary{background:var(--white); color:var(--ink); border-color:var(--border);}
+  .btn.coral{background:var(--coral); border-color:var(--coral);}
+  .btn:active{transform:translateY(1px);}
+  svg text{font-family:Calibri,Arial,sans-serif;}
+  .hubwrap{background:var(--tint); border:1px solid var(--border); border-radius:12px; padding:12px; margin-bottom:16px;}
+  .legend{display:flex; gap:16px; font-size:12px; color:var(--gray); margin-top:8px; flex-wrap:wrap;}
+  .legend i{display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:6px; vertical-align:middle;}
+  .toggle-list{display:flex; flex-direction:column; gap:10px; margin-bottom:18px;}
+  .togglerow{
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+    padding:12px 14px; border:1px solid var(--border); border-radius:10px; background:var(--tint);
+  }
+  .togglerow span.label{font-size:14px;}
+  .switch{position:relative; width:44px; height:24px; flex:0 0 auto;}
+  .switch input{opacity:0; width:100%; height:100%; position:absolute; margin:0; cursor:pointer;}
+  .slider{
+    position:absolute; top:0; left:0; right:0; bottom:0; background:var(--border); border-radius:999px; transition:background .15s;
+  }
+  .slider:before{
+    content:""; position:absolute; width:18px; height:18px; left:3px; top:3px;
+    background:var(--white); border-radius:50%; transition:transform .15s; box-shadow:0 1px 2px rgba(0,0,0,.3);
+  }
+  .switch input:checked + .slider{background:var(--coral);}
+  .switch input:checked + .slider:before{transform:translateX(20px);}
+  .scoremeter{display:flex; align-items:center; gap:14px; padding:14px; background:var(--tint); border-radius:10px; border:1px solid var(--border);}
+  .scoremeter .num{font-size:30px; font-weight:700; font-family:Arial,sans-serif; color:var(--coral);}
+  .line-preview{display:flex; gap:8px; flex-wrap:wrap; margin-top:14px;}
+  .station{
+    padding:8px 12px; border-radius:8px; font-size:12.5px; border:1px dashed var(--border); color:var(--gray);
+    background:var(--white);
+  }
+  .station.on{border-style:solid; border-color:var(--good); color:var(--good); background:var(--good-soft); font-weight:600;}
+  .loop-nodes{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px;}
+  .loopnode{
+    flex:1; min-width:110px; text-align:center; padding:14px 8px; border-radius:10px; cursor:pointer;
+    border:1px solid var(--border); background:var(--tint); font-size:13px; font-weight:600; user-select:none;
+  }
+  .loopnode small{display:block; font-weight:400; color:var(--gray); margin-top:4px; font-size:11px;}
+  .loopnode.strong{background:var(--good-soft); border-color:var(--good); color:var(--good);}
+  .loopnode.needs{background:var(--warn-soft); border-color:var(--warn); color:var(--warn);}
+  .loopnode.unknown{background:var(--white);}
+  .weaklink{
+    margin-top:4px; padding:14px; border-radius:10px; background:var(--coral-soft); border:1px solid var(--coral);
+    font-size:14px;
+  }
+  .weaklink b{color:var(--coral);}
+  textarea{
+    width:100%; padding:10px 12px; border:1px solid var(--border); border-radius:9px;
+    font-family:inherit; font-size:14px; color:var(--ink); background:var(--white); resize:vertical;
+  }
+  .lenses{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:16px;}
+  @media (max-width:680px){.lenses{grid-template-columns:1fr;}}
+  .lens{border:1px solid var(--border); border-radius:10px; padding:14px; background:var(--tint);}
+  .lens h3{font-size:14px; margin-bottom:4px; color:var(--ink);}
+  .lens p.desc{font-size:12.5px; color:var(--gray); margin:0 0 10px;}
+  .lens textarea{min-height:56px; font-size:13px;}
+  .mapfield{margin-bottom:14px;}
+  .mapfield label{display:block; font-size:12.5px; font-weight:700; color:var(--gray); margin-bottom:5px;}
+  .mapfield label .n{
+    display:inline-flex; width:18px; height:18px; border-radius:50%; background:var(--coral); color:var(--white);
+    align-items:center; justify-content:center; font-size:10px; margin-right:6px;
+  }
+  .mapfield input[type=text], .mapfield textarea{width:100%;}
+  .pullbtn{font-size:11.5px; color:var(--coral); background:none; border:none; cursor:pointer; padding:0; margin-left:6px; text-decoration:underline; font-family:inherit;}
+  .navfoot{display:flex; justify-content:space-between; margin-top:6px; gap:10px;}
+  footer.site{
+    text-align:center; padding:26px 20px 40px; color:var(--gray); font-size:12px;
+  }
+  .toast{
+    position:fixed; bottom:22px; left:50%; transform:translateX(-50%) translateY(20px);
+    background:var(--ink); color:var(--white); padding:10px 18px; border-radius:9px; font-size:13px;
+    opacity:0; transition:opacity .2s, transform .2s; pointer-events:none; z-index:50;
+  }
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+  @media print{
+    nav.steps, .no-print{display:none !important;}
+    .panel{display:block !important;}
+    body{background:#fff;}
+    .card{box-shadow:none; border:1px solid #ccc; break-inside:avoid;}
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brandrow">
+      <div class="wordmark">WIGHT <span>&amp;</span> COMPANY</div>
+      <div class="tag">Green Schools Conference 2027 · Companion Handout</div>
+    </div>
+    <div class="titleblock">
+      <h1>Food Service as a Force for Good</h1>
+      <p>Work through all six activities during the session, then compile your Sustainable Food Service Readiness Map to take home. Nothing you enter here is saved after you close this page — screenshot or export before you go.</p>
+    </div>
+  </div>
+</header>
+
+<nav class="steps">
+  <div class="wrap" id="stepNav"></div>
+</nav>
+
+<main class="wrap">
+
+  <!-- PANEL 1 -->
+  <section class="panel" data-panel="1">
+    <div class="card">
+      <div class="eyebrow">Activity 1 · 0:00</div>
+      <h2>Food-Service Barrier Map</h2>
+      <p class="meta">Live poll — check every barrier that applies in your district right now.</p>
+      <div class="barrier-list" id="barrierList"></div>
+      <div class="tally">
+        <div class="count"><span id="barrierCount">0</span>/12</div>
+        <div class="bar"><i id="barrierBar"></i></div>
+        <div style="font-size:13px; color:var(--gray);">Compare your count out loud with the room.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PANEL 2 -->
+  <section class="panel" data-panel="2">
+    <div class="card">
+      <div class="eyebrow">Activity 2 · 0:12</div>
+      <h2>Hub-and-Spoke Kitchen Design Sprint</h2>
+      <p class="lead">List your sites and their current kitchen capacity. Watch the diagram build as you go — that's your district's hub-and-spoke shape.</p>
+      <div class="sites" id="siteRows"></div>
+      <div class="btnrow no-print">
+        <button class="btn secondary" id="addSite" type="button">+ Add site</button>
+      </div>
+      <div class="hubwrap">
+        <svg id="hubSvg" viewBox="0 0 640 320" width="100%" height="260" preserveAspectRatio="xMidYMid meet"></svg>
+        <div class="legend">
+          <span><i style="background:var(--good);"></i>Full kitchen</span>
+          <span><i style="background:var(--warn);"></i>Satellite / warming</span>
+          <span><i style="background:var(--bad);"></i>No kitchen</span>
+        </div>
+      </div>
+      <div id="hubNote" style="font-size:13.5px; color:var(--gray);"></div>
+    </div>
+  </section>
+
+  <!-- PANEL 3 -->
+  <section class="panel" data-panel="3">
+    <div class="card">
+      <div class="eyebrow">Activity 3 · 0:30</div>
+      <h2>"Control of the Tray" — Choice Architecture</h2>
+      <p class="lead">Toggle each move on or off and watch your serving line — and your choice score — respond.</p>
+      <div class="toggle-list" id="toggleList"></div>
+      <div class="scoremeter">
+        <div class="num"><span id="toggleScore">0</span>/6</div>
+        <div style="font-size:13.5px; color:var(--gray);">Choice-architecture moves active on your line</div>
+      </div>
+      <div class="line-preview" id="linePreview"></div>
+    </div>
+  </section>
+
+  <!-- PANEL 4 -->
+  <section class="panel" data-panel="4">
+    <div class="card">
+      <div class="eyebrow">Activity 4 · 0:40</div>
+      <h2>Reusable Tray + Waste-Loop Simulation</h2>
+      <p class="lead">Click each stage of the loop to rate it: tap once for <b>Needs work</b>, twice for <b>Strong</b>, again to reset. Reusables succeed or fail on the details after lunch.</p>
+      <div class="loop-nodes" id="loopNodes"></div>
+      <div class="weaklink" id="weakLink"></div>
+    </div>
+  </section>
+
+  <!-- PANEL 5 -->
+  <section class="panel" data-panel="5">
+    <div class="card">
+      <div class="eyebrow">Activity 5 · 0:49</div>
+      <h2>Implementation Failure Clinic</h2>
+      <p class="lead">Bring a real barrier from your district. Run it through all four lenses before you decide it's unsolvable.</p>
+      <textarea id="barrierInput" rows="2" placeholder="Describe one real barrier from your district..."></textarea>
+      <div class="lenses">
+        <div class="lens">
+          <h3>District leadership</h3>
+          <p class="desc">Governance, board communication, stakeholder trust, funding alignment, equity, risk.</p>
+          <textarea data-lens="leadership" placeholder="Notes..."></textarea>
+        </div>
+        <div class="lens">
+          <h3>Architecture</h3>
+          <p class="desc">Space, phasing, infrastructure, dining environment, long-term flexibility.</p>
+          <textarea data-lens="architecture" placeholder="Notes..."></textarea>
+        </div>
+        <div class="lens">
+          <h3>Kitchen design</h3>
+          <p class="desc">Equipment, workflow, sanitation, storage, line speed, warewashing, transport.</p>
+          <textarea data-lens="kitchen" placeholder="Notes..."></textarea>
+        </div>
+        <div class="lens">
+          <h3>Zero waste</h3>
+          <p class="desc">Sorting behavior, student engagement, staff training, measurement, culture change.</p>
+          <textarea data-lens="waste" placeholder="Notes..."></textarea>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PANEL 6 -->
+  <section class="panel" data-panel="6">
+    <div class="card">
+      <div class="eyebrow">Activity 6 · 0:57 — Your work product</div>
+      <h2>Sustainable Food Service Readiness Map</h2>
+      <p class="lead">Start it before you leave. Fields marked with a link pull in what you already entered above — everything stays editable.</p>
+      <div id="mapFields"></div>
+      <div class="btnrow no-print">
+        <button class="btn coral" id="btnPrint" type="button">Print</button>
+        <button class="btn secondary" id="btnDownload" type="button">Download .txt</button>
+        <button class="btn secondary" id="btnCopy" type="button">Copy to clipboard</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="navfoot no-print">
+    <button class="btn secondary" id="prevBtn" type="button">← Back</button>
+    <button class="btn" id="nextBtn" type="button">Next →</button>
+  </div>
+
+</main>
+
+<footer class="site">
+  Prepared for Wight &amp; Company · Food Service as a Force for Good · Green Schools Conference 2027
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  var STEP_LABELS = ["Barriers","Kitchen Sprint","Choice Tray","Waste Loop","Failure Clinic","Readiness Map"];
+  var current = 1;
+
+  var state = {
+    barriers: {},
+    sites: [
+      {name:"", status:"unknown"},
+      {name:"", status:"unknown"},
+      {name:"", status:"unknown"},
+      {name:"", status:"unknown"}
+    ],
+    toggles: {
+      fruit:false, veg:false, milk:false, dessert:false, defaultFruit:false, grabgo:false
+    },
+    loop: { serve:"unknown", eat:"unknown", sort:"unknown", wash:"unknown", sanitize:"unknown", restock:"unknown" },
+    barrierInput:"",
+    lenses: { leadership:"", architecture:"", kitchen:"", waste:"" },
+    map: { f1:"",f2:"",f3:"",f4:"",f5:"",f6:"",f7:"",f8:"",f9:"",f10:"",f11:"",f12:"" }
+  };
+
+  var BARRIERS = [
+    "Limited dishwashing capacity","Old / undersized kitchens","Parent resistance",
+    "Procurement rules","Labor shortages","No composting infrastructure",
+    "Tight phasing / construction schedule","Unclear metrics","Student noncompliance",
+    "Vendor transitions","Inspection delays","Board cost questions"
+  ];
+
+  var TOGGLES = [
+    {key:"fruit", label:"Fruit placed at eye level, first in line", station:"Fruit"},
+    {key:"veg", label:"Vegetable served before starch", station:"Vegetable"},
+    {key:"milk", label:"White milk placed before flavored milk", station:"Milk"},
+    {key:"defaultFruit", label:"Tray defaults to a fruit or vegetable unless declined", station:"Default"},
+    {key:"grabgo", label:"Grab-and-go healthy option visible at re-entry", station:"Grab-and-go"},
+    {key:"dessert", label:"Dessert placed after the register, out of the main sightline", station:"Dessert"}
+  ];
+
+  var LOOP = [
+    {key:"serve", label:"Serve", note:"Tray fill & line speed"},
+    {key:"eat", label:"Eat", note:"Student time & routine"},
+    {key:"sort", label:"Scrape & Sort", note:"Sorting accuracy"},
+    {key:"wash", label:"Wash", note:"Dish-machine throughput"},
+    {key:"sanitize", label:"Sanitize", note:"Sanitation capacity"},
+    {key:"restock", label:"Restock", note:"Transport & storage"}
+  ];
+
+  var MAP_FIELDS = [
+    {key:"f1", label:"Current food-service barrier", pull:"barriers"},
+    {key:"f2", label:"Desired health / equity / sustainability outcome"},
+    {key:"f3", label:"Existing kitchen capacity", pull:"kitchen"},
+    {key:"f4", label:"Central & satellite kitchen possibilities", pull:"kitchen"},
+    {key:"f5", label:"Reusable service-ware feasibility", pull:"loop"},
+    {key:"f6", label:"Waste-sorting readiness", pull:"loop"},
+    {key:"f7", label:"Student behavior & supervision needs"},
+    {key:"f8", label:"Required partners"},
+    {key:"f9", label:"Communication audiences"},
+    {key:"f10", label:"First three implementation steps"},
+    {key:"f11", label:"Metrics to track"},
+    {key:"f12", label:"One risk to address before launch", pull:"lenses"}
+  ];
+
+  function $(sel, root){ return (root||document).querySelector(sel); }
+  function $all(sel, root){ return Array.prototype.slice.call((root||document).querySelectorAll(sel)); }
+
+  // ---------- Step nav ----------
+  function renderStepNav(){
+    var nav = $("#stepNav");
+    nav.innerHTML = "";
+    STEP_LABELS.forEach(function(label, i){
+      var n = i+1;
+      var tab = document.createElement("div");
+      tab.className = "steptab" + (n===current ? " active" : "");
+      tab.innerHTML = '<span class="num">'+ (n<10?"0"+n:n) +'</span><span>'+label+'</span>';
+      tab.addEventListener("click", function(){ goTo(n); });
+      nav.appendChild(tab);
+    });
+  }
+
+  function goTo(n){
+    current = Math.max(1, Math.min(6, n));
+    $all(".panel").forEach(function(p){
+      p.classList.toggle("active", parseInt(p.getAttribute("data-panel"),10) === current);
+    });
+    renderStepNav();
+    $("#prevBtn").disabled = current===1;
+    $("#nextBtn").textContent = current===6 ? "Done" : "Next →";
+    window.scrollTo({top:0, behavior:"instant"});
+  }
+
+  $("#prevBtn").addEventListener("click", function(){ goTo(current-1); });
+  $("#nextBtn").addEventListener("click", function(){ if(current<6) goTo(current+1); });
+
+  // ---------- Activity 1: Barriers ----------
+  function renderBarriers(){
+    var list = $("#barrierList");
+    list.innerHTML = "";
+    BARRIERS.forEach(function(b, i){
+      var id = "b"+i;
+      var lab = document.createElement("label");
+      lab.className = "chk";
+      lab.innerHTML = '<input type="checkbox" id="'+id+'" '+(state.barriers[i]?"checked":"")+'><span>'+b+'</span>';
+      lab.querySelector("input").addEventListener("change", function(e){
+        state.barriers[i] = e.target.checked;
+        updateBarrierTally();
+      });
+      list.appendChild(lab);
+    });
+    updateBarrierTally();
+  }
+
+  function updateBarrierTally(){
+    var count = Object.keys(state.barriers).filter(function(k){ return state.barriers[k]; }).length;
+    $("#barrierCount").textContent = count;
+    $("#barrierBar").style.width = (count/12*100) + "%";
+  }
+
+  // ---------- Activity 2: Hub and spoke ----------
+  function renderSites(){
+    var wrap = $("#siteRows");
+    wrap.innerHTML = "";
+    state.sites.forEach(function(site, i){
+      var row = document.createElement("div");
+      row.className = "siterow";
+      row.innerHTML =
+        '<input type="text" placeholder="Site name (e.g., Site A)" value="'+escapeHtml(site.name)+'">' +
+        '<select>' +
+          '<option value="full"'+(site.status==="full"?" selected":"")+'>Full kitchen</option>' +
+          '<option value="satellite"'+(site.status==="satellite"?" selected":"")+'>Satellite / warming</option>' +
+          '<option value="none"'+(site.status==="none"?" selected":"")+'>No kitchen</option>' +
+          '<option value="unknown"'+(site.status==="unknown"?" selected":"")+'>Not yet known</option>' +
+        '</select>' +
+        '<button class="iconbtn no-print" type="button" title="Remove">✕</button>';
+      row.querySelector('input[type=text]').addEventListener("input", function(e){
+        state.sites[i].name = e.target.value; renderHub();
+      });
+      row.querySelector('select').addEventListener("change", function(e){
+        state.sites[i].status = e.target.value; renderHub();
+      });
+      row.querySelector('.iconbtn').addEventListener("click", function(){
+        state.sites.splice(i,1); renderSites(); renderHub();
+      });
+      wrap.appendChild(row);
+    });
+  }
+
+  $("#addSite").addEventListener("click", function(){
+    if(state.sites.length>=8) return;
+    state.sites.push({name:"", status:"unknown"});
+    renderSites(); renderHub();
+  });
+
+  function statusColor(s){
+    return s==="full" ? "var(--good)" : s==="satellite" ? "var(--warn)" : s==="none" ? "var(--bad)" : "var(--border)";
+  }
+  function statusColorHex(s){
+    return s==="full" ? "#3F7D53" : s==="satellite" ? "#C98A2C" : s==="none" ? "#B03A2E" : "#C9C6C1";
+  }
+
+  function renderHub(){
+    var svg = $("#hubSvg");
+    var sites = state.sites;
+    var cx=320, cy=160, r=110;
+    var parts = [];
+    parts.push('<circle cx="'+cx+'" cy="'+cy+'" r="34" fill="#1A1A1A"></circle>');
+    parts.push('<text x="'+cx+'" y="'+(cy+4)+'" text-anchor="middle" fill="#FFFFFF" font-size="11" font-weight="700">HUB</text>');
+    var n = Math.max(sites.length,1);
+    sites.forEach(function(site, i){
+      var angle = (Math.PI*2 * i / n) - Math.PI/2;
+      var x = cx + r*Math.cos(angle);
+      var y = cy + r*Math.sin(angle);
+      parts.push('<line x1="'+cx+'" y1="'+cy+'" x2="'+x+'" y2="'+y+'" stroke="'+statusColorHex(site.status)+'" stroke-width="3"></line>');
+      parts.push('<circle cx="'+x+'" cy="'+y+'" r="26" fill="'+statusColorHex(site.status)+'"></circle>');
+      var label = site.name && site.name.trim() ? site.name.trim() : ("Site "+(i+1));
+      if(label.length>12) label = label.slice(0,11)+"…";
+      parts.push('<text x="'+x+'" y="'+(y+38)+'" text-anchor="middle" fill="#1A1A1A" font-size="11">'+escapeXml(label)+'</text>');
+    });
+    svg.innerHTML = parts.join("");
+
+    var full = sites.filter(function(s){return s.status==="full";}).length;
+    var sat = sites.filter(function(s){return s.status==="satellite";}).length;
+    var none = sites.filter(function(s){return s.status==="none";}).length;
+    var note = sites.length + " site(s) mapped — " + full + " full kitchen, " + sat + " satellite, " + none + " with no kitchen.";
+    if(sat+none>0){
+      note += " Satellite and no-kitchen sites are your bulk-transport and central-production load.";
+    }
+    $("#hubNote").textContent = note;
+  }
+
+  // ---------- Activity 3: Choice architecture ----------
+  function renderToggles(){
+    var wrap = $("#toggleList");
+    wrap.innerHTML = "";
+    TOGGLES.forEach(function(t){
+      var row = document.createElement("div");
+      row.className = "togglerow";
+      row.innerHTML =
+        '<span class="label">'+t.label+'</span>' +
+        '<label class="switch"><input type="checkbox" '+(state.toggles[t.key]?"checked":"")+'><span class="slider"></span></label>';
+      row.querySelector("input").addEventListener("change", function(e){
+        state.toggles[t.key] = e.target.checked;
+        renderToggleSummary();
+      });
+      wrap.appendChild(row);
+    });
+    renderToggleSummary();
+  }
+
+  function renderToggleSummary(){
+    var on = TOGGLES.filter(function(t){ return state.toggles[t.key]; });
+    $("#toggleScore").textContent = on.length;
+    var prev = $("#linePreview");
+    prev.innerHTML = "";
+    TOGGLES.forEach(function(t){
+      var span = document.createElement("span");
+      span.className = "station" + (state.toggles[t.key] ? " on" : "");
+      span.textContent = t.station + (state.toggles[t.key] ? " ✓" : "");
+      prev.appendChild(span);
+    });
+  }
+
+  // ---------- Activity 4: Waste loop ----------
+  function renderLoop(){
+    var wrap = $("#loopNodes");
+    wrap.innerHTML = "";
+    LOOP.forEach(function(stage){
+      var el = document.createElement("div");
+      var st = state.loop[stage.key];
+      el.className = "loopnode " + st;
+      el.innerHTML = stage.label + "<small>" + stage.note + "</small>";
+      el.addEventListener("click", function(){
+        var order = ["unknown","needs","strong"];
+        var idx = order.indexOf(state.loop[stage.key]);
+        state.loop[stage.key] = order[(idx+1)%order.length];
+        renderLoop();
+      });
+      wrap.appendChild(el);
+    });
+    var weakest = LOOP.find(function(s){ return state.loop[s.key]==="needs"; }) ||
+                  LOOP.find(function(s){ return state.loop[s.key]==="unknown"; });
+    var box = $("#weakLink");
+    if(weakest){
+      box.innerHTML = 'Name your weakest link before you buy a single tray: right now that looks like <b>'+weakest.label+'</b> — '+weakest.note.toLowerCase()+'.';
+    } else {
+      box.innerHTML = 'Every stage is rated <b>Strong</b>. The loop closes — that\'s a real reusable-tray case, not just an intention.';
+    }
+  }
+
+  // ---------- Activity 5: Failure clinic ----------
+  $("#barrierInput").addEventListener("input", function(e){ state.barrierInput = e.target.value; });
+  $all('[data-lens]').forEach(function(ta){
+    ta.addEventListener("input", function(e){ state.lenses[ta.getAttribute("data-lens")] = e.target.value; });
+  });
+
+  // ---------- Activity 6: Readiness map ----------
+  function renderMap(){
+    var wrap = $("#mapFields");
+    wrap.innerHTML = "";
+    MAP_FIELDS.forEach(function(f, i){
+      var div = document.createElement("div");
+      div.className = "mapfield";
+      var pullHtml = f.pull ? ' <button class="pullbtn no-print" type="button">pull in Activity notes</button>' : '';
+      div.innerHTML =
+        '<label><span class="n">'+(i+1)+'</span>'+f.label + pullHtml + '</label>' +
+        '<textarea rows="2"></textarea>';
+      var ta = div.querySelector("textarea");
+      ta.value = state.map[f.key];
+      ta.addEventListener("input", function(e){ state.map[f.key] = e.target.value; });
+      if(f.pull){
+        div.querySelector(".pullbtn").addEventListener("click", function(){
+          ta.value = pullFrom(f.pull);
+          state.map[f.key] = ta.value;
+        });
+      }
+      wrap.appendChild(div);
+    });
+  }
+
+  function pullFrom(source){
+    if(source==="barriers"){
+      var checked = Object.keys(state.barriers).filter(function(k){return state.barriers[k];}).map(function(k){return BARRIERS[k];});
+      return checked.length ? checked.join("; ") : (state.barrierInput || "");
+    }
+    if(source==="kitchen"){
+      return state.sites.filter(function(s){return s.name;}).map(function(s){
+        return s.name + " (" + s.status + ")";
+      }).join("; ");
+    }
+    if(source==="loop"){
+      return LOOP.map(function(s){ return s.label + ": " + state.loop[s.key]; }).join("; ");
+    }
+    if(source==="lenses"){
+      var parts = [];
+      if(state.lenses.leadership) parts.push("Leadership: "+state.lenses.leadership);
+      if(state.lenses.architecture) parts.push("Architecture: "+state.lenses.architecture);
+      if(state.lenses.kitchen) parts.push("Kitchen: "+state.lenses.kitchen);
+      if(state.lenses.waste) parts.push("Zero waste: "+state.lenses.waste);
+      return parts.join(" / ");
+    }
+    return "";
+  }
+
+  function compileMapText(){
+    var lines = [];
+    lines.push("SUSTAINABLE FOOD SERVICE READINESS MAP");
+    lines.push("Food Service as a Force for Good — Green Schools Conference 2027");
+    lines.push("Prepared for Wight & Company");
+    lines.push("");
+    MAP_FIELDS.forEach(function(f, i){
+      lines.push((i+1)+". "+f.label);
+      lines.push("   "+ (state.map[f.key] || "—"));
+      lines.push("");
+    });
+    return lines.join("\n");
+  }
+
+  // ---------- Buttons ----------
+  $("#btnPrint").addEventListener("click", function(){
+    goTo(6);
+    window.print();
+  });
+
+  $("#btnCopy").addEventListener("click", function(){
+    var text = compileMapText();
+    function done(ok){ showToast(ok ? "Copied to clipboard" : "Couldn't copy — select and copy manually"); }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){done(true);}).catch(function(){done(false);});
+    } else {
+      try{
+        var ta = document.createElement("textarea");
+        ta.value = text; document.body.appendChild(ta); ta.select();
+        document.execCommand("copy"); document.body.removeChild(ta);
+        done(true);
+      }catch(e){ done(false); }
+    }
+  });
+
+  function browserDownloadFallback(text){
+    try{
+      var blob = new Blob([text], {type:"text/plain"});
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement("a");
+      a.href = url; a.download = "readiness-map.txt";
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast("Download started");
+    }catch(e2){
+      showToast("Download unavailable — try Copy instead");
+    }
+  }
+
+  $("#btnDownload").addEventListener("click", function(){
+    var text = compileMapText();
+    var useNamespace = (window.claude && window.claude.use) ? window.claude.use("downloads") : null;
+    if(useNamespace && typeof useNamespace.then === "function"){
+      useNamespace.then(function(downloads){
+        if(!downloads){ browserDownloadFallback(text); return; }
+        downloads.save({filename:"readiness-map.txt", data:text}).then(function(){
+          showToast("Download started");
+        }).catch(function(){
+          browserDownloadFallback(text);
+        });
+      }).catch(function(){
+        browserDownloadFallback(text);
+      });
+    } else {
+      browserDownloadFallback(text);
+    }
+  });
+
+  var toastTimer = null;
+  function showToast(msg){
+    var t = $("#toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ t.classList.remove("show"); }, 2400);
+  }
+
+  function escapeHtml(s){
+    return (s||"").replace(/[&<>"']/g, function(c){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
+    });
+  }
+  function escapeXml(s){ return escapeHtml(s); }
+
+  // ---------- Init ----------
+  renderStepNav();
+  renderBarriers();
+  renderSites();
+  renderHub();
+  renderToggles();
+  renderLoop();
+  renderMap();
+  goTo(1);
+
+})();
+</script>
+</body>
+</html>
