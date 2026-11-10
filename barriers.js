@@ -1,14 +1,16 @@
-import { BARRIERS, submitBarriers } from '../lib/store.js';
-import { body, send, validDevice } from '../lib/http.js';
-
-const ALLOWED = new Set(BARRIERS.map(b => b.id));
-
-export default async function handler(req, res) {
-  if (req.method !== 'POST') return send(res, 405, { error: 'POST only' });
-  const { device, ids } = await body(req);
-  if (!validDevice(device) || !Array.isArray(ids)) return send(res, 400, { error: 'Bad request' });
-  const clean = [...new Set(ids)].filter(id => ALLOWED.has(id));
-  if (!clean.length) return send(res, 400, { error: 'Pick at least one barrier' });
-  try { send(res, 200, { ok: true, ...(await submitBarriers(device, clean)) }); }
-  catch { send(res, 503, { error: 'Storage unavailable' }); }
-}
+// Shared constants. Labels match the handout's Activity 1 wording exactly.
+export const BARRIERS = [
+  { id: 'b0',  label: 'Limited dishwashing capacity' },
+  { id: 'b1',  label: 'Old / undersized kitchens' },
+  { id: 'b2',  label: 'Parent resistance' },
+  { id: 'b3',  label: 'Procurement rules' },
+  { id: 'b4',  label: 'Labor shortages' },
+  { id: 'b5',  label: 'No composting infrastructure' },
+  { id: 'b6',  label: 'Tight phasing / construction schedule' },
+  { id: 'b7',  label: 'Unclear metrics' },
+  { id: 'b8',  label: 'Student noncompliance' },
+  { id: 'b9',  label: 'Vendor transitions' },
+  { id: 'b10', label: 'Inspection delays' },
+  { id: 'b11', label: 'Board cost questions' }
+];
+export const LENSES = ['District leadership', 'Architecture', 'Kitchen design', 'Zero waste', 'Not sure'];
