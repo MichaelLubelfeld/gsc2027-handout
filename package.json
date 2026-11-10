@@ -1,0 +1,9 @@
+{
+  "name": "gsc2027-room",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Anonymous room-collection layer for the GSC 2027 session Food Service as a Force for Good",
+  "scripts": { "dev": "node dev-server.js" },
+  "engines": { "node": ">=18" }
+}

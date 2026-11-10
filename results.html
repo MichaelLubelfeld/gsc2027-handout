@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Room Results — Food Service as a Force for Good</title>
+<style>
+  :root{
+    --ink:#1A1A1A; --coral:#E4502F; --coral-soft:#FBE4DC; --gray:#6E6E6E; --tint:#F4F2F0;
+    --white:#FFFFFF; --border:#E0DDD8; --good:#3F7D53; --good-soft:#E4EFE6; --warn:#C98A2C;
+    --warn-soft:#F6EBDA; --bad:#B03A2E;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--tint); color:var(--ink);
+       font-family:Calibri,"Segoe UI",Arial,sans-serif; font-size:16px; line-height:1.45;}
+  h1,h2,h3{font-family:Arial,"Helvetica Neue",Helvetica,sans-serif; font-weight:700; margin:0;}
+  header.top{background:var(--ink); color:var(--white); padding:18px 28px; display:flex; gap:24px; align-items:center; flex-wrap:wrap;}
+  header.top .t{flex:1; min-width:280px;}
+  .wordmark{font-family:Arial,Helvetica,sans-serif; font-weight:700; letter-spacing:.06em; font-size:13px;}
+  .wordmark span{color:var(--coral);}
+  .tag{font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:#C9C6C1; margin-top:2px;}
+  h1{font-size:clamp(24px,3.2vw,40px); color:var(--white); margin-top:6px;}
+  .join{background:var(--white); color:var(--ink); border-radius:11px; padding:10px 16px;}
+  .join small{display:block; font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--gray);}
+  .join b{font-size:clamp(15px,1.5vw,21px);}
+  nav{display:flex; gap:8px; padding:14px 28px 0; flex-wrap:wrap; align-items:center;}
+  nav button{font-family:Arial,sans-serif; font-weight:700; font-size:14px; padding:9px 16px; border-radius:999px;
+             border:1px solid var(--border); background:var(--white); color:var(--gray); cursor:pointer;}
+  nav button[aria-pressed="true"]{background:var(--ink); color:var(--white); border-color:var(--ink);}
+  nav .spacer{flex:1;}
+  main{padding:18px 28px 40px;}
+  .stat{font-size:clamp(15px,1.5vw,21px); color:var(--gray); margin:0 0 14px;}
+  .stat b{color:var(--ink); font-size:1.5em; font-family:Arial,sans-serif;}
+  .bars{display:grid; gap:10px;}
+  .row{display:grid; grid-template-columns:minmax(150px,30%) 1fr 78px; gap:14px; align-items:center;
+       font-size:clamp(14px,1.45vw,21px);}
+  .track{background:var(--white); border:1px solid var(--border); border-radius:6px;
+         height:clamp(20px,2.5vw,32px); overflow:hidden;}
+  .fill{height:100%; background:var(--ink); transition:width .6s ease;}
+  .row.top3 .fill{background:var(--coral);}
+  .n{font-weight:700; font-family:Arial,sans-serif; font-variant-numeric:tabular-nums;}
+  .n span{font-weight:400; color:var(--gray); font-size:.72em; margin-left:5px;}
+  .cards{display:grid; grid-template-columns:repeat(auto-fill,minmax(330px,1fr)); gap:14px;}
+  .c{background:var(--white); border:1px solid var(--border); border-left:5px solid var(--coral);
+     border-radius:12px; padding:16px 18px;}
+  .c p{margin:0 0 10px; font-size:clamp(16px,1.6vw,23px); line-height:1.35;}
+  .c .lens{font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.07em; color:var(--coral);}
+  .c.hiddenEntry{border-left-color:var(--border);}
+  .btn{font-family:Arial,sans-serif; font-weight:700; font-size:13px; padding:8px 14px; border-radius:8px;
+       border:1px solid var(--ink); background:var(--ink); color:var(--white); cursor:pointer;}
+  .btn.ghost{background:var(--white); color:var(--ink); border-color:var(--border);}
+  .btn.danger{background:var(--bad); border-color:var(--bad);}
+  .ctl{margin-top:10px;}
+  .empty{color:var(--gray); font-size:19px; padding:28px 0;}
+  .facbar{background:var(--warn-soft); border:1px solid var(--warn); border-radius:11px; padding:12px 14px;
+          margin:0 0 16px; display:flex; gap:10px; flex-wrap:wrap; align-items:center; font-size:13.5px;}
+  .facbar input{font-family:inherit; font-size:14px; padding:8px 10px; border:1px solid var(--border);
+                border-radius:8px; background:var(--white); color:var(--ink);}
+  .msg{color:var(--gray); font-size:13px;}
+  .offline{color:var(--bad); font-size:13px; font-weight:700;}
+  :focus-visible{outline:3px solid var(--coral); outline-offset:2px;}
+  [hidden]{display:none !important;}
+  @media (max-width:640px){
+    header.top, nav, main{padding-left:16px; padding-right:16px;}
+    .row{grid-template-columns:1fr 64px;}
+    .row .track{grid-column:1 / -1; grid-row:2;}
+    .cards{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="t">
+    <div class="wordmark">WIGHT <span>&amp;</span> COMPANY</div>
+    <div class="tag">Food Service as a Force for Good · GSC 2027</div>
+    <h1 id="title">What's in the way in this room</h1>
+  </div>
+  <div class="join"><small>Join on your phone</small><b id="joinUrl"></b></div>
+</header>
+
+<nav>
+  <button id="vB" aria-pressed="true">Barrier map</button>
+  <button id="vC" aria-pressed="false">Failure clinic</button>
+  <span class="spacer"></span>
+  <span class="offline" id="offline" hidden>Reconnecting…</span>
+  <button class="ghost" id="facToggle" style="border-radius:999px;">Facilitator</button>
+</nav>
+
+<main>
+  <div class="facbar" id="facbar" hidden>
+    <span id="facLogin"><label for="key">Facilitator key</label>
+      <input id="key" type="password" autocomplete="off">
+      <button class="btn" id="keyGo">Unlock</button></span>
+    <span id="facTools" hidden>
+      <strong>Facilitator mode.</strong> Clinic entries stay off the projector until you press Show.
+      <button class="btn ghost" id="csv">Download CSV</button>
+      <button class="btn danger" id="reset">Delete all data</button>
+      <button class="btn ghost" id="lock">Lock</button>
+    </span>
+    <span class="msg" id="facMsg" role="status" aria-live="polite"></span>
+  </div>
+
+  <section id="panelB">
+    <p class="stat"><b id="resp">0</b> people have shared their barriers</p>
+    <div class="bars" id="bars"></div>
+  </section>
+
+  <section id="panelC" hidden>
+    <p class="stat" id="clinicStat"></p>
+    <div class="cards" id="cards"></div>
+  </section>
+</main>
+
+<script>
+var $ = function(id){ return document.getElementById(id); };
+var key = null; try { key = sessionStorage.getItem('gsc27key'); } catch(e){}
+var data = null, resetArmed = false;
+
+$('joinUrl').textContent = location.host.replace(/^www\./, '');
+
+function setView(v){
+  $('vB').setAttribute('aria-pressed', v === 'b');
+  $('vC').setAttribute('aria-pressed', v === 'c');
+  $('panelB').hidden = v !== 'b';
+  $('panelC').hidden = v === 'b';
+  $('title').textContent = v === 'b' ? "What's in the way in this room" : 'Implementation failure clinic';
+}
+$('vB').onclick = function(){ setView('b'); };
+$('vC').onclick = function(){ setView('c'); };
+
+function load(){
+  return fetch('/api/results', { headers: key ? {'x-admin-key': key} : {}, cache: 'no-store' })
+    .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+    .then(function(j){ data = j; $('offline').hidden = true; render(); })
+    .catch(function(){ $('offline').hidden = false; });
+}
+
+function render(){
+  if(!data) return;
+  var admin = data.admin;
+  $('facLogin').hidden = admin; $('facTools').hidden = !admin;
+  $('resp').textContent = data.respondents;
+
+  var max = Math.max.apply(null, [1].concat(data.barriers.map(function(b){ return b.count; })));
+  var bars = $('bars'); bars.textContent = '';
+  data.barriers.forEach(function(b, i){
+    var row = document.createElement('div');
+    row.className = 'row' + (i < 3 && b.count > 0 ? ' top3' : '');
+    var lab = document.createElement('div'); lab.textContent = b.label;
+    var tr = document.createElement('div'); tr.className = 'track';
+    var fill = document.createElement('div'); fill.className = 'fill';
+    fill.style.width = (b.count / max * 100) + '%';
+    tr.appendChild(fill);
+    var n = document.createElement('div'); n.className = 'n'; n.textContent = b.count;
+    if(data.respondents){
+      var sp = document.createElement('span');
+      sp.textContent = Math.round(b.count / data.respondents * 100) + '%';
+      n.appendChild(sp);
+    }
+    row.appendChild(lab); row.appendChild(tr); row.appendChild(n);
+    bars.appendChild(row);
+  });
+
+  var cards = $('cards'); cards.textContent = '';
+  var shownN = data.clinic.filter(function(e){ return e.shown; }).length;
+  $('clinicStat').textContent = '';
+  var sb = document.createElement('b'); sb.textContent = data.totalClinic;
+  $('clinicStat').appendChild(sb);
+  $('clinicStat').appendChild(document.createTextNode(
+    admin ? (' barriers submitted · ' + shownN + ' on screen') : ' barriers submitted by the room'));
+
+  if(!data.clinic.length){
+    var e0 = document.createElement('div'); e0.className = 'empty';
+    e0.textContent = admin ? 'No submissions yet.' : 'The panel will bring selected barriers up here.';
+    cards.appendChild(e0);
+  }
+  data.clinic.forEach(function(e){
+    var c = document.createElement('div');
+    c.className = 'c' + (e.shown ? '' : ' hiddenEntry');
+    var p = document.createElement('p'); p.textContent = e.text;
+    var l = document.createElement('div'); l.className = 'lens'; l.textContent = e.lens;
+    c.appendChild(p); c.appendChild(l);
+    if(admin){
+      var ctl = document.createElement('div'); ctl.className = 'ctl';
+      var b = document.createElement('button');
+      b.className = 'btn' + (e.shown ? ' ghost' : '');
+      b.textContent = e.shown ? 'Hide from screen' : 'Show on screen';
+      b.onclick = function(){ adminCall('show', {id: e.id, shown: !e.shown}); };
+      ctl.appendChild(b); c.appendChild(ctl);
+    }
+    cards.appendChild(c);
+  });
+}
+
+function adminCall(action, extra){
+  var body = Object.assign({action: action}, extra || {});
+  return fetch('/api/admin', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json', 'x-admin-key': key || ''},
+    body: JSON.stringify(body)
+  }).then(function(r){
+    return r.json().catch(function(){ return {}; }).then(function(j){
+      if(!r.ok) throw new Error(j.error || 'Failed');
+      return j;
+    });
+  }).then(function(j){ return load().then(function(){ return j; }); });
+}
+
+$('facToggle').onclick = function(){
+  $('facbar').hidden = !$('facbar').hidden;
+  if(!$('facbar').hidden && !key) $('key').focus();
+};
+$('keyGo').onclick = function(){
+  key = $('key').value; $('facMsg').textContent = '';
+  adminCall('check').then(function(){
+    try { sessionStorage.setItem('gsc27key', key); } catch(e){}
+    $('key').value = '';
+  }).catch(function(e){ key = null; $('facMsg').textContent = e.message; });
+};
+$('key').addEventListener('keydown', function(e){ if(e.key === 'Enter') $('keyGo').click(); });
+$('lock').onclick = function(){
+  key = null;
+  try { sessionStorage.removeItem('gsc27key'); } catch(e){}
+  $('facbar').hidden = true; load();
+};
+$('reset').onclick = function(){
+  if(!resetArmed){
+    resetArmed = true;
+    $('reset').textContent = 'Click again to permanently delete';
+    setTimeout(function(){ resetArmed = false; $('reset').textContent = 'Delete all data'; }, 5000);
+    return;
+  }
+  resetArmed = false; $('reset').textContent = 'Delete all data';
+  adminCall('reset').then(function(j){ $('facMsg').textContent = 'Deleted (' + j.deleted + ' records).'; })
+    .catch(function(e){ $('facMsg').textContent = e.message; });
+};
+$('csv').onclick = function(){
+  var q = function(x){ return '"' + String(x).replace(/"/g, '""') + '"'; };
+  var lines = ['section,item,count_or_lens,percent_or_time'];
+  data.barriers.forEach(function(b){
+    lines.push(['barrier', q(b.label), b.count,
+      data.respondents ? Math.round(b.count / data.respondents * 100) + '%' : ''].join(','));
+  });
+  data.clinic.forEach(function(e){
+    lines.push(['clinic', q(e.text), q(e.lens), new Date(e.ts).toISOString()].join(','));
+  });
+  lines.push(['respondents', '', data.respondents, ''].join(','));
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([lines.join('\n')], {type: 'text/csv'}));
+  a.download = 'gsc2027-room-results.csv';
+  a.click();
+};
+
+if(new URLSearchParams(location.search).get('view') === 'clinic') setView('c');
+load();
+setInterval(load, 3000);
+</script>
+</body>
+</html>
